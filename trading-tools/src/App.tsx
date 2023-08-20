@@ -6,9 +6,8 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='bg-green-100' onClick={()=> setCount((prev)=> prev++)}>
+    <div onClick={()=> setCount((prev)=> prev++)}>
       <PositionSize />
-      <span>{count}</span>
     </div>
   )
 }
