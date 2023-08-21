@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: cd trading-tools && npm install
       - name: build app
-        run: npm run build
+        run: cd trading-tools && npm run build
         env:
           PUBLIC_URL: /
       - name: Upload artifact
