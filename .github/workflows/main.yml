@@ -21,9 +21,9 @@ jobs:
         with:
           node-version: 18.x
       - name: Install dependencies
-        run: cd trading-tools && npm install
+        run: npm install
       - name: build app
-        run: cd trading-tools && npm run build
+        run: npm run build
         env:
           PUBLIC_URL: /
       - name: Upload artifact
