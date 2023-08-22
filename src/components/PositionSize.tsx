@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 
 type FormData = {
   accountBalance: number;
@@ -29,8 +30,10 @@ export const PositionSize: FC = () => {
   const onSubmit = (data: FormData ) => console.log(data);
 
   return (
-    <div className="w-1/2 mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)}>
+   <Card>
+    <CardHeader>Calculate your position size</CardHeader>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <CardContent>
         <Input
           placeholder="Account balance"
           type="text"
@@ -49,8 +52,12 @@ export const PositionSize: FC = () => {
         {errors.entryPrice && (
           <p className="input-error">Entry price required</p>
         )}
-        <Button>Click me</Button>
+      
+        </CardContent>
+        <CardFooter>
+          <Button>Click me</Button>
+        </CardFooter>
       </form>
-    </div>
+    </Card>
   );
 };
