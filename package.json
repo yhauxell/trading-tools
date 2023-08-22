@@ -6,7 +6,7 @@
   "homepage": "yhauxell.github.io/trading-tools",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build vite build --base=/trading-tools/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "add:component": "npx shadcn-ui@latest add"
