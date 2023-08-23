@@ -49,7 +49,7 @@ export const PositionSize: FC = () => {
   });
 
   const [positionSize, setPositionSize] =
-    useState<CalculatedPositionSize>(null);
+    useState<CalculatedPositionSize>();
 
   const onSubmit = ({
     accountBalance,
