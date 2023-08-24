@@ -38,6 +38,7 @@ interface CalculatedPositionSize {
   size: number;
   requiredCapital: number;
   r3: number;
+  withLeverage: number;
 }
 
 export const PositionSize: FC = () => {
@@ -68,6 +69,7 @@ export const PositionSize: FC = () => {
     const riskAmount = accountBalance * (riskPercentage / 100);
     const size = riskAmount / distanceToStop;
     const requiredCapital = entryPrice * size;
+    const withLeverage = requiredCapital / leverage;
 
     setPositionSize({
       distanceToStop,
@@ -75,6 +77,7 @@ export const PositionSize: FC = () => {
       size,
       requiredCapital,
       r3,
+      withLeverage
     });
   };
 
@@ -172,6 +175,10 @@ export const PositionSize: FC = () => {
         <div className="flex justify-between mb-4">
           <span className="mr-4 font-bold">Capital</span>
           {positionSize?.requiredCapital}
+        </div>
+        <div className="flex justify-between mb-4">
+          <span className="mr-4 font-bold">Capital with leverage</span>
+          {positionSize?.withLeverage}
         </div>
       </Card>
     </div>
