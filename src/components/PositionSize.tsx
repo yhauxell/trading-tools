@@ -10,6 +10,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
 import { MagicWandIcon } from '@radix-ui/react-icons';
 import { Label } from './ui/label';
 
@@ -48,8 +49,9 @@ export const PositionSize: FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const [positionSize, setPositionSize] =
-    useState<CalculatedPositionSize>();
+  const [positionSize, setPositionSize] = useState<CalculatedPositionSize>();
+  const defaultLeverage = 10;
+  const [leverage, setLeverage] = useState<number>(defaultLeverage);
 
   const onSubmit = ({
     accountBalance,
@@ -62,7 +64,7 @@ export const PositionSize: FC = () => {
 
     const distanceToStop = entryPrice - sl;
     const distanceToProfit = tp - entryPrice;
-    const r3 = ( 100/ (distanceToStop / distanceToProfit)) / 100;
+    const r3 = 100 / (distanceToStop / distanceToProfit) / 100;
     const riskAmount = accountBalance * (riskPercentage / 100);
     const size = riskAmount / distanceToStop;
     const requiredCapital = entryPrice * size;
@@ -79,11 +81,15 @@ export const PositionSize: FC = () => {
   return (
     <div className="mx-auto w-1/2 mt-96 grid grid-cols-2 grid-flow-row gap-4">
       <Card>
-        <CardHeader className='text-lg text-purple-400'>Calculate your position size</CardHeader>
+        <CardHeader className="text-lg text-purple-400">
+          Calculate your position size
+        </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
             <div className="mb-4">
+              <Label htmlFor="accountBalance">Account balance</Label>
               <Input
+                id="accountBalance"
                 placeholder="Account balance"
                 type="text"
                 {...register('accountBalance', { required: true })}
@@ -94,7 +100,9 @@ export const PositionSize: FC = () => {
               )}
             </div>
             <div className="mb-4">
+              <Label htmlFor="riskPercentage">Risk %</Label>
               <Input
+                id="riskPercentage"
                 placeholder="Risk % per trade"
                 type="text"
                 {...register('riskPercentage')}
@@ -104,7 +112,7 @@ export const PositionSize: FC = () => {
             <div className="mb-4">
               <Label htmlFor="entryPrice">Entry price</Label>
               <Input
-              id="entryPrice"
+                id="entryPrice"
                 placeholder="Enter your entry price"
                 type="text"
                 {...register('entryPrice')}
@@ -115,7 +123,14 @@ export const PositionSize: FC = () => {
               )}
             </div>
             <div className="mb-4">
+              <Label className="mb-2 flex justify-between">Leverage <span>{leverage}x</span></Label>
+              <Slider className="" defaultValue={[defaultLeverage]} max={100} step={1} onValueChange={([value])=> setLeverage(value)}/>
+              <div></div>
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="sl">Stop loss</Label>
               <Input
+                id="sl"
                 placeholder="Stop loss price"
                 type="text"
                 {...register('sl')}
@@ -123,7 +138,9 @@ export const PositionSize: FC = () => {
               />
             </div>
             <div>
+              <Label htmlFor="tp">Take profit</Label>
               <Input
+                id="tp"
                 placeholder="Take profit price"
                 type="text"
                 {...register('tp')}
@@ -132,14 +149,14 @@ export const PositionSize: FC = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="default" size="lg" className='flex-1'>
+            <Button variant="default" size="lg" className="flex-1">
               Calculate
-              <MagicWandIcon className="ml-2" /> 
+              <MagicWandIcon className="ml-2" />
             </Button>
           </CardFooter>
         </form>
       </Card>
-      <Card className='p-6 bg-slate-900'>
+      <Card className="p-6 bg-slate-900">
         <div className="flex justify-between mb-4">
           <span className="mr-4 font-bold">RRR</span>
           {positionSize?.r3 && `1:${positionSize?.r3}`}
